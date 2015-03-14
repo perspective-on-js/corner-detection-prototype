@@ -1,5 +1,6 @@
 ;(function(){
     var canvas = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
 
     function loadImage(url, callback){
 	var image = new Image();
@@ -10,7 +11,6 @@
     }
 
     loadImage('/image/sample.jpg', function(image){
-	var context = canvas.getContext('2d');
 	context.drawImage(image, 0, 0);
     });
 })()
