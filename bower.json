@@ -1,0 +1,22 @@
+{
+  "name": "corner-detection-prototype",
+  "version": "1.0.0",
+  "homepage": "https://github.com/perspective-on-js/corner-detection-prototype",
+  "authors": [
+    "dvberkel <daan.v.berkel.1980@gmail.com>"
+  ],
+  "description": "Prototype to detect corners in a scene",
+  "main": "index.html",
+  "keywords": [
+    "prototype"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
