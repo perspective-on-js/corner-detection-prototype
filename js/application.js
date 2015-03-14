@@ -63,4 +63,12 @@
 	original = image;
 	drawPointsOnOriginal();
     });
+
+    var thresholdSlider = document.getElementById('threshold');
+    thresholdSlider.value = window.threshold;
+    thresholdSlider.addEventListener('change', function(){
+	console.log(thresholdSlider.value);
+	window.threshold = thresholdSlider.value;
+    });
+
 })()
