@@ -1,6 +1,7 @@
 ;(function(){
     var canvas = document.getElementById('canvas');
     var context = canvas.getContext('2d');
+    var original;
 
     function loadImage(url, callback){
 	var image = new Image();
@@ -27,17 +28,33 @@
 	// perform detection
 	// returns the amount of detected corners
 	var count = jsfeat.fast_corners.detect(gray, corners, border);
+	return {
+	    count: count,
+	    corners: corners
+	}
+    }
+
+    function drawPoints(data){
+	var count = data.count;
+	var corners = data.corners;
 	for (var index = 0; index < count; index++){
 	    var point = corners[index];
 	    context.beginPath();
 	    context.arc(point.x, point.y, 5, 0, 2 * Math.PI, false);
 	    context.fill();
 	}
+
+    }
+
+    function drawPointsOnOriginal(){
+	context.drawImage(original, 0, 0);
+	var cornerData = pointsOf(context.getImageData(0, 0, canvas.width, canvas.height));
+	drawPoints(cornerData);
     }
 
     loadImage('/image/sample.jpg', function(image){
-	context.drawImage(image, 0, 0);
-	pointsOf(context.getImageData(0, 0, canvas.width, canvas.height));
+	original = image;
+	drawPointsOnOriginal();
     });
 
     window.canvas = canvas;
