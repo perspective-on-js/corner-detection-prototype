@@ -1,4 +1,5 @@
 ;(function(){
+    window.threshold = 20;
     var canvas = document.getElementById('canvas');
     var context = canvas.getContext('2d');
     var original;
@@ -11,11 +12,12 @@
 	image.src = url;
     }
 
-    function pointsOf(image){
+    function pointsOf(image, options){
+	var options = options || {};
 	var gray = new jsfeat.matrix_t(image.width, image.height, jsfeat.U8_t | jsfeat.C1_t);
 	jsfeat.imgproc.grayscale(image.data, image.width, image.height, gray, jsfeat.COLOR_RGBA2GRAY);
 
-	var threshold = 20;
+	var threshold = options.threshold || 20;
 	jsfeat.fast_corners.set_threshold(threshold);
 
 	var corners = [], border = 3;
@@ -34,7 +36,9 @@
 	}
     }
 
-    function drawPoints(data){
+    function drawPoints(data, options){
+	var options = options || {}
+	context.fillStyle = options.color || '#00ff00';
 	var count = data.count;
 	var corners = data.corners;
 	for (var index = 0; index < count; index++){
@@ -48,7 +52,9 @@
 
     function drawPointsOnOriginal(){
 	context.drawImage(original, 0, 0);
-	var cornerData = pointsOf(context.getImageData(0, 0, canvas.width, canvas.height));
+	var cornerData = pointsOf(context.getImageData(0, 0, canvas.width, canvas.height),{
+	    threshold: window.threshold
+	});
 	drawPoints(cornerData);
     }
 
@@ -56,7 +62,4 @@
 	original = image;
 	drawPointsOnOriginal();
     });
-
-    window.canvas = canvas;
-    window.context = context;
 })()
