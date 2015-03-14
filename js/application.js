@@ -56,6 +56,7 @@
 	    threshold: window.threshold
 	});
 	drawPoints(cornerData);
+	requestAnimationFrame(drawPointsOnOriginal);
     }
 
     loadImage('/image/sample.jpg', function(image){
